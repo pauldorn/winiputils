@@ -3,7 +3,7 @@
   "author": "Paul Dorn <Paul.Dorn@gmail.com>",
   "description": "IP utilities to expand nodejs on windows.",
   "main": "./lib/WinIpUtils",
-  "engines": { "node": ">=0.8.0" },
+  "engines": { "node": ">=0.12.0" },
   "keywords": [ ],
   "licenses": [ { "type": "MIT", "url": "http://github.com/mscdex/cap/raw/master/LICENSE" } ],
   "repository" : { "type": "git", "url": "http://github.com/pauldorn/winiputils.git" }
