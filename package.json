@@ -1,10 +1,10 @@
-{ "name": "cap",
-  "version": "0.0.10",
-  "author": "Brian White <mscdex@mscdex.net>",
-  "description": "A cross-platform binding for performing packet capturing with node.js",
-  "main": "./lib/Cap",
+{ "name": "winiputils",
+  "version": "0.0.1",
+  "author": "Paul Dorn <Paul.Dorn@gmail.com>",
+  "description": "IP utilities to expand nodejs on windows.",
+  "main": "./lib/WinIpUtils",
   "engines": { "node": ">=0.8.0" },
-  "keywords": [ "pcap", "packet", "capture", "libpcap", "winpcap" ],
+  "keywords": [ ],
   "licenses": [ { "type": "MIT", "url": "http://github.com/mscdex/cap/raw/master/LICENSE" } ],
-  "repository" : { "type": "git", "url": "http://github.com/mscdex/cap.git" }
+  "repository" : { "type": "git", "url": "http://github.com/pauldorn/winiputils.git" }
 }
