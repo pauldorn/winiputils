@@ -1,51 +1,54 @@
 #include <node.h>
 #include <node_buffer.h>
-#include <v8.h>
+#include <nan.h>
+#include <pcap.h>
 #include <stdlib.h>
 #include <string.h>
+#include <Objbase.h>
+#include <Netioapi.h>
+#include <Iphlpapi.h>
+
+
+#if _MSC_VER == 1500
+#define NTDDI_VERSION NTDDI_WIN2K
+#define _WIN32_WINNT _WIN32_WINNT_WIN2K
+#endif
 
 using namespace node;
 using namespace v8;
 
-/*
-static void Initialize(Handle<Object> target) {
-      HandleScope scope;
 
-      Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-      Local<String> name = String::NewSymbol("Cap");
+NAN_METHOD(GetFriendlyName) {
+    NanScope();
+    // Expect the {GUID} only
+    CLSID guid;
+    PWSTR wFriendlyName[IF_MAX_STRING_SIZE * 2];
+    LPSTR friendlyName[IF_MAX_STRING_SIZE + 1];
+    PWSTR wDeviceName[IF_MAX_STRING_SIZE * 2];
 
-      Pcap_constructor = Persistent<FunctionTemplate>::New(tpl);
-      Pcap_constructor->InstanceTemplate()->SetInternalFieldCount(1);
-      Pcap_constructor->SetClassName(name);
+    NanUtf8String deviceName(args[0]->ToString());
 
-      NODE_SET_PROTOTYPE_METHOD(Pcap_constructor, "send", Send);
-      NODE_SET_PROTOTYPE_METHOD(Pcap_constructor, "open", Open);
-      NODE_SET_PROTOTYPE_METHOD(Pcap_constructor, "close", Close);
-#ifdef _WIN32
-      NODE_SET_PROTOTYPE_METHOD(Pcap_constructor, "setMinBytes", WIN_SetMin);
-#endif
+    hr = MultiByteToWideChar(CP_UTF8, 0, (*deviceName), -1, (LPWSTR)wDeviceName, IF_MAX_STRING_SIZE * 2);
+    hr = CLSIDFromString((LPCOLESTR)wDeviceName,&guid);
+    NET_LUID InterfaceLuid;
 
-      emit_symbol = NODE_PSYMBOL("emit");
-      packet_symbol = NODE_PSYMBOL("packet");
-      close_symbol = NODE_PSYMBOL("close");
+    hr = ConvertInterfaceGuidToLuid(&guid, &InterfaceLuid);
+    hr = ConvertInterfaceLuidToAlias(&InterfaceLuid, (LPWSTR)wFriendlyName, IF_MAX_STRING_SIZE+1);
+    WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)wFriendlyName, -1, (LPSTR)friendlyName, IF_MAX_STRING_SIZE * 2, NULL, NULL);
+    NanReturnValue(NanNew<String>((char *)friendlyName));
+}
 
-      target->Set(name, Pcap_constructor->GetFunction());
-    }
-};
-    */
 
 extern "C" {
   void init(Handle<Object> target) {
-    HandleScope scope;
-/*
-    Pcap::Initialize(target);
-    target->Set(String::NewSymbol("findDevice"),
-                FunctionTemplate::New(FindDevice)->GetFunction());
-    target->Set(String::NewSymbol("deviceList"),
-                FunctionTemplate::New(ListDevices)->GetFunction());
+    NanScope();
 
-*/
+//    target->Set(NanNew<String>("findDevice"),
+//            NanNew<FunctionTemplate>(FindDevice)->GetFunction());
+    target->Set(NanNew<String>("GetFriendlyName"),
+            NanNew<FunctionTemplate>(GetFriendlyName)->GetFunction());
+
   }
 
-  NODE_MODULE(winiputils, init);
+  NODE_MODULE(WinIpUtils, init);
 }
