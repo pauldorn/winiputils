@@ -1,7 +1,6 @@
 #include <node.h>
 #include <node_buffer.h>
 #include <nan.h>
-#include <pcap.h>
 #include <stdlib.h>
 #include <string.h>
 #include <Objbase.h>
