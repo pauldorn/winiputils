@@ -4,7 +4,7 @@
   "description": "IP utilities to expand nodejs on windows.",
   "main": "./lib/WinIpUtils",
   "engines": { "node": ">=0.12.0" },
-  "os": ['win32', '!linux', '!darwin', '!freebsd', '!sunos'],
+  "os": ["win32", "!linux", "!darwin", "!freebsd", "!sunos"],
   "keywords": [ ],
   "licenses": [ { "type": "MIT", "url": "http://github.com/pauldorn/winiputils/raw/master/LICENSE" } ],
   "repository" : { "type": "git", "url": "http://github.com/pauldorn/winiputils.git" },
